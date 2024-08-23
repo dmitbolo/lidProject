@@ -15,3 +15,9 @@ php artisan serve
 npm install
 
 npm run dev
+
+Будет создан аккаунт: 
+
+логин: test@example.com
+
+пароль: 12345678

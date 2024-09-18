@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LidRequest;
 use App\Models\Lid;
 use App\Models\Status;
 use Exception;
@@ -44,30 +45,18 @@ class LidController extends Controller
         return Inertia::render('Lids/Create');
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(LidRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $validatedData = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
-            'text' => 'required|string',
-        ]);
+        $validatedData = $request->validated();
         $validatedData["status_id"] = 1;
         Lid::create($validatedData);
         return Redirect::to('/');
     }
 
-    public function update(Request $request): \Illuminate\Http\RedirectResponse
+    public function update(LidRequest $request): \Illuminate\Http\RedirectResponse
     {
         $id = $request->id;
-        $validatedData = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
-            'text' => 'required|string',
-        ]);
+        $validatedData = $request->validated();
 
         $lid = Lid::find($id);
         $lid->fill($validatedData);
